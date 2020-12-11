@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.experiment.android.spacexpastlaunchtracker.models.response.Links" />
+
+        <variable
+            name="clickListener"
+            type="com.experiment.android.spacexpastlaunchtracker.ui.launchdetails.ChipClickListener" />
+
+    </data>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4dp"
+        android:padding="@dimen/padding_10dp"
+        app:chipSpacing="@dimen/margin_10dp"
+        app:chipSpacingHorizontal="@dimen/margin_16dp">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_article_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->clickListener.onChipClicked(model.articleLink)}"
+            android:text="@string/article_link"
+            app:visibleIfNotEmpty="@{model.articleLink}" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_reddit_campaign_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->clickListener.onChipClicked(model.redditCampaignLink)}"
+            android:text="@string/reddit_campaign_link"
+            app:visibleIfNotEmpty="@{model.redditCampaignLink}" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_reddit_media_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->clickListener.onChipClicked(model.redditMediaLink)}"
+            android:text="@string/reddit_media_link"
+            app:visibleIfNotEmpty="@{model.redditMediaLink}" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_wiki_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->clickListener.onChipClicked(model.wikiLink)}"
+            android:text="@string/wiki_link"
+            app:visibleIfNotEmpty="@{model.wikiLink}" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_youtube_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->clickListener.onChipClicked(model.videoLink)}"
+            android:text="@string/youtube_link"
+            app:visibleIfNotEmpty="@{model.videoLink}" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+</layout>

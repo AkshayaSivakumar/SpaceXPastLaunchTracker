@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_10dp">
+
+    <com.experiment.android.spacexpastlaunchtracker.utils.custom.CustomDottedProgressBar
+        android:id="@+id/custom_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_msg_error"
+        style="@style/Widget.SpaceX.TextView.ErrorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_4dp"
+        android:gravity="center"
+        android:padding="@dimen/padding_5dp"
+        android:text="@string/results_could_not_be_loaded" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_retry"
+        style="@style/Widget.SpaceX.Button.ButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/retry" />
+
+</LinearLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="Theme.SpaceX" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="chipStyle">@style/Widget.SpaceX.ChipStyle</item>
+    </style>
+
+    <style name="Widget.SpaceX.Toolbar.ToolbarBarStyle" parent="">
+        <item name="android:background">?attr/colorAccent</item>
+        <item name="android:theme">@style/Theme.SpaceX</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextAppearance">@style/Widget.Space.TextAppearance.ToolbarTextAppearance
+        </item>
+    </style>
+
+    <style name="Widget.Space.TextAppearance.ToolbarTextAppearance" parent="">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_18sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto_slab</item>
+    </style>
+
+    <style name="Widget.SpaceX.TextView.ListItemTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:padding">@dimen/padding_5dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Widget.SpaceX.TextView.ErrorTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+        <item name="android:fontFamily">@font/roboto_slab</item>
+        <item name="android:padding">@dimen/padding_5dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Widget.SpaceX.TextView.ErrorTextViewMain" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_centerInParent">true</item>
+        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_20sp</item>
+        <item name="android:fontFamily">@font/roboto_slab</item>
+        <item name="android:padding">@dimen/padding_5dp</item>
+    </style>
+
+    <style name="Widget.SpaceX.TextView.LaunchDetailsValueStyle" parent="">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textAlignment">viewEnd</item>
+        <item name="android:maxWidth">180dp</item>
+        <item name="android:padding">@dimen/padding_2dp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+    </style>
+
+    <style name="Widget.SpaceX.TextView.LaunchDetailsLabelStyle" parent="">
+        <item name="android:fontFamily">@font/roboto</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxWidth">150dp</item>
+        <item name="android:maxLines">3</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:padding">@dimen/padding_2dp</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:textSize">@dimen/text_size_14sp</item>
+    </style>
+
+    <style name="Widget.SpaceX.Button.ButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="cornerRadius">15dp</item>
+        <item name="strokeColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+        <item name="android:fontFamily">@font/roboto_condensed_bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Widget.SpaceX.TextAppearance.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/roboto_condensed_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/textColorPrimary</item>
+        <item name="android:fontFamily">@font/roboto_condensed_bold</item>
+    </style>
+
+    <style name="Widget.SpaceX.ChipStyle" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipBackgroundColor">@color/colorPrimary</item>
+        <item name="chipEndPadding">@dimen/padding_10dp</item>
+        <item name="chipStartPadding">@dimen/padding_10dp</item>
+        <item name="textStartPadding">@dimen/padding_10dp</item>
+        <item name="textEndPadding">@dimen/padding_10dp</item>
+        <item name="chipMinHeight">@dimen/height_36dp</item>
+        <item name="android:textAppearance">@style/Widget.SpaceX.TextAppearance.Body2</item>
+        <item name="checkedIconEnabled">false</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipIconEnabled">false</item>
+        <item name="chipIconVisible">false</item>
+        <item name="closeIconEnabled">false</item>
+        <item name="closeIconVisible">false</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:checkable">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">@dimen/padding_5dp</item>
+    </style>
+
+</resources>

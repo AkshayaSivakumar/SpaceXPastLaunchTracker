@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.experiment.android.spacexpastlaunchtracker.models.response.PastLaunchResponse" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8dp"
+        android:layout_marginEnd="@dimen/margin_8dp"
+        app:cardBackgroundColor="@color/cardBackgroundColor"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_10dp"
+            android:paddingBottom="@dimen/padding_10dp">
+
+            <ImageView
+                android:id="@+id/iv_mission_patch_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_16dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:layout_marginBottom="@dimen/margin_16dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/mission_patch_image"
+                android:elevation="@dimen/elevation_5dp"
+                android:minWidth="@dimen/thumbnail_image_size"
+                android:minHeight="@dimen/thumbnail_image_size"
+                android:padding="@dimen/padding_5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_mission_name"
+                style="@style/Widget.SpaceX.TextView.ListItemTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@{model.missionName}"
+                android:textSize="@dimen/text_size_16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintBottom_toTopOf="@+id/tv_flight_number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_mission_patch_image"
+                app:layout_constraintTop_toTopOf="@+id/iv_mission_patch_image"
+                tools:text="@string/mission_name" />
+
+            <TextView
+                android:id="@+id/tv_flight_number"
+                style="@style/Widget.SpaceX.TextView.ListItemTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="4dp"
+                android:drawablePadding="@dimen/padding_5dp"
+                app:drawableStartCompat="@drawable/ic_flight_number"
+                app:intToString="@{model.flightNumber}"
+                app:layout_constraintBottom_toTopOf="@+id/tv_mission_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_mission_patch_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mission_name"
+                tools:text="@string/flight_number" />
+
+            <TextView
+                android:id="@+id/tv_mission_date"
+                style="@style/Widget.SpaceX.TextView.ListItemTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:drawablePadding="@dimen/padding_5dp"
+                app:drawableStartCompat="@drawable/ic_calendar_icon_24"
+                app:layout_constraintBottom_toTopOf="@+id/tv_mission_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_mission_patch_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_flight_number"
+                app:utcToLocal="@{model.launchDateUtc}"
+                tools:text="@string/launch_date" />
+
+            <TextView
+                android:id="@+id/tv_mission_location"
+                style="@style/Widget.SpaceX.TextView.ListItemTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="@dimen/padding_5dp"
+                android:text="@{model.launchSite.siteName}"
+                app:drawableStartCompat="@drawable/ic_location_icon_24"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_mission_patch_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_mission_patch_image"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mission_date"
+                tools:text="@string/launch_location" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
