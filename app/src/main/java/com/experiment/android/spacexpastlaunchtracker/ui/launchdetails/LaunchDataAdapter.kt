@@ -10,7 +10,7 @@ import com.experiment.android.spacexpastlaunchtracker.databinding.ItemMainDetail
 import com.experiment.android.spacexpastlaunchtracker.models.MainDetailsModel
 import com.experiment.android.spacexpastlaunchtracker.models.ViewType
 import com.experiment.android.spacexpastlaunchtracker.models.response.Links
-import com.experiment.android.spacexpastlaunchtracker.utils.custom.append
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.append
 
 class LaunchDataAdapter(
     private val details: ArrayList<ViewType>,

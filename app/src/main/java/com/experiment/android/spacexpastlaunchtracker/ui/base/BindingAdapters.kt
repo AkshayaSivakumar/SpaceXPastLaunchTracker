@@ -8,9 +8,9 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.experiment.android.spacexpastlaunchtracker.R
-import com.experiment.android.spacexpastlaunchtracker.utils.constants.AppConstants
-import com.experiment.android.spacexpastlaunchtracker.utils.custom.formatTo
-import com.experiment.android.spacexpastlaunchtracker.utils.custom.toDate
+import com.experiment.android.spacexpastlaunchtracker.utils.constants.Constants
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.formatTo
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.toDate
 import com.google.android.material.chip.Chip
 
 /**
@@ -18,7 +18,7 @@ import com.google.android.material.chip.Chip
  */
 fun ImageView.loadImage(imageUrl: String?) {
 
-    if (null == imageUrl || "" == imageUrl) {
+    if (imageUrl.isNullOrBlank()) {
         Glide.with(this.context)
             .load(R.drawable.ic_broken_image)
             .centerCrop()
@@ -48,7 +48,11 @@ fun bindIntToText(textView: TextView, int: Int) {
  */
 @BindingAdapter("utcToLocal")
 fun bindConvertUtcToLocal(textView: TextView, dateStr: String) {
-    textView.text = if (dateStr == "") "" else dateStr.toDate().formatTo(AppConstants.DATE_FORMAT)
+    textView.text =
+        if (dateStr.isEmpty() || dateStr.isBlank())
+            ""
+        else
+            dateStr.toDate().formatTo(Constants.DISPLAY_DATE_FORMAT)
 }
 
 /**
@@ -64,5 +68,10 @@ fun bindLaunchSuccess(textView: TextView, isLaunchSuccess: Boolean) {
  */
 @BindingAdapter("visibleIfNotEmpty")
 fun bindChipVisibility(chip: Chip, data: String) {
-    chip.isVisible = !data.isNullOrEmpty()
+    chip.isVisible = !data.isNullOrBlank()
+}
+
+@BindingAdapter("visibleIfNotEmptyTv")
+fun bindTextViewVisibility(textView: TextView, data: String?) {
+    textView.isVisible = !data.isNullOrBlank()
 }

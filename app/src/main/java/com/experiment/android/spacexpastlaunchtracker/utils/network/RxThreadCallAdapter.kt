@@ -1,4 +1,4 @@
-package com.experiment.android.spacexpastlaunchtracker.utils.retrofit
+package com.experiment.android.spacexpastlaunchtracker.utils.network
 
 import io.reactivex.Observable
 import io.reactivex.Scheduler

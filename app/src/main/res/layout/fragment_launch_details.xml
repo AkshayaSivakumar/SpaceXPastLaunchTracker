@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.launchdetails.LaunchDetailsFragment">
 
+    <data>
+
+        <variable
+            name="model"
+            type="com.experiment.android.spacexpastlaunchtracker.models.response.PastLaunchResponse" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -47,7 +54,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/youtube_player" />
+                app:layout_constraintTop_toBottomOf="@+id/youtube_player"
+                app:visibleIfNotEmptyTv="@{model.details}" />
 
             <TextView
                 android:id="@+id/tv_description"
@@ -59,6 +67,7 @@
                 android:fontFamily="@font/roboto"
                 android:lineSpacingMultiplier="1.5"
                 android:padding="@dimen/padding_5dp"
+                android:text="@{model.details}"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/text_size_14sp"
                 app:layout_constraintBottom_toTopOf="@+id/rcv_launch_details"
@@ -66,6 +75,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_description_label"
+                app:visibleIfNotEmptyTv="@{model.details}"
                 tools:text="@string/no_detail_available" />
 
             <androidx.recyclerview.widget.RecyclerView

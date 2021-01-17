@@ -12,4 +12,7 @@ interface PastLaunchApi {
         @Query("order") order: String
     ): List<PastLaunchResponse>
 
+    @GET("past")
+    suspend fun getAllPastLaunches(): List<PastLaunchResponse>
+
 }

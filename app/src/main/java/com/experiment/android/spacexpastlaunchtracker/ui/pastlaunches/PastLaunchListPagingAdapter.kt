@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.experiment.android.spacexpastlaunchtracker.databinding.ItemPastLaunchBinding
 import com.experiment.android.spacexpastlaunchtracker.models.response.PastLaunchResponse
 import com.experiment.android.spacexpastlaunchtracker.ui.base.loadImage
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.toDate
 
 class PastLaunchListPagingAdapter(val itemClickListener: ListItemClickListener) :
     PagingDataAdapter<PastLaunchResponse, PastLaunchListPagingAdapter.PastLaunchViewHolder>(
@@ -34,8 +35,9 @@ class PastLaunchListPagingAdapter(val itemClickListener: ListItemClickListener) 
             binding.model = model
             binding.ivMissionPatchImage.loadImage(model.links?.missionPathImageUrl)
             binding.cardView.setOnClickListener {
-                itemClickListener.itemClicked(model)
+                itemClickListener.onItemClicked(model)
             }
+            println("Date Inter " + model.launchDateUtc.toDate())
             binding.executePendingBindings()
         }
     }
@@ -57,7 +59,7 @@ class PastLaunchListPagingAdapter(val itemClickListener: ListItemClickListener) 
     }
 
     class ListItemClickListener(val itemClickListener: (pastLaunchData: PastLaunchResponse) -> Unit) {
-        fun itemClicked(pastLaunchData: PastLaunchResponse) = itemClickListener(pastLaunchData)
+        fun onItemClicked(pastLaunchData: PastLaunchResponse) = itemClickListener(pastLaunchData)
     }
 
 }

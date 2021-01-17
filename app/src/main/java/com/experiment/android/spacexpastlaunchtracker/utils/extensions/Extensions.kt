@@ -1,10 +1,10 @@
-package com.experiment.android.spacexpastlaunchtracker.utils.custom
+package com.experiment.android.spacexpastlaunchtracker.utils.extensions
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.widget.TextView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.experiment.android.spacexpastlaunchtracker.utils.constants.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -30,18 +30,15 @@ fun launchExternalApp(context: Context, url: String?) {
     }
 }
 
-fun String.toDate(
-    dateFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
-    timeZone: TimeZone = TimeZone.getTimeZone("UTC")
-): Date {
-    val parser = SimpleDateFormat(dateFormat, Locale.getDefault())
-    parser.timeZone = timeZone
-    return parser.parse(this)
+fun String.toDate(): Date {
+    val sdfParser = SimpleDateFormat(Constants.API_DATE_FORMAT, Locale.getDefault())
+    sdfParser.timeZone = TimeZone.getTimeZone("UTC")
+    return sdfParser.parse(this)
 }
 
-fun Date.formatTo(dateFormat: String, timeZone: TimeZone = TimeZone.getDefault()): String {
+fun Date.formatTo(dateFormat: String): String {
     val formatter = SimpleDateFormat(dateFormat, Locale.getDefault())
-    formatter.timeZone = timeZone
+    formatter.timeZone = TimeZone.getDefault()
     return formatter.format(this)
 }
 

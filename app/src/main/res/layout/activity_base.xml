@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="enterAlways"
-                tools:text="@string/fragment_name_launch_details">
+                tools:text="@string/fragment_name_past_launches">
 
             </androidx.appcompat.widget.Toolbar>
 

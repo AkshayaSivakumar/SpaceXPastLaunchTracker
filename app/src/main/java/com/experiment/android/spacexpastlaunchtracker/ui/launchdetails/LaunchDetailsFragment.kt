@@ -13,6 +13,10 @@ import com.experiment.android.spacexpastlaunchtracker.databinding.FragmentLaunch
 import com.experiment.android.spacexpastlaunchtracker.models.ViewType
 import com.experiment.android.spacexpastlaunchtracker.models.response.PastLaunchResponse
 import com.experiment.android.spacexpastlaunchtracker.utils.custom.*
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.addItem
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.asLinksModel
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.asMainDetailsModel
+import com.experiment.android.spacexpastlaunchtracker.utils.extensions.launchExternalApp
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
@@ -52,6 +56,7 @@ class LaunchDetailsFragment : Fragment(), ChipClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         val launchDetailsData = args.dataModel
+        binding.model = launchDetailsData
 
         populateValues(launchDetailsData)
         setupRecyclerView(launchDetailsData)
@@ -86,15 +91,8 @@ class LaunchDetailsFragment : Fragment(), ChipClickListener {
     private fun populateValues(launchDetailsData: PastLaunchResponse) {
         viewModel.setTitle(launchDetailsData.missionName)
 
-        if (launchDetailsData.details == null || launchDetailsData.details == "") {
-            binding.tvDescriptionLabel.isVisible = false
-            binding.tvDescription.isVisible = false
-        } else {
-            binding.tvDescription.text = launchDetailsData.details
-        }
-
         val videoId = launchDetailsData.links?.youtubeId
-        if (null == videoId) {
+        if (videoId.isNullOrBlank()) {
             binding.youtubePlayer.isVisible = false
         } else {
             setUpYoutubeView(videoId)

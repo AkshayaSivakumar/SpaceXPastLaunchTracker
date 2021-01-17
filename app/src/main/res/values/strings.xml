@@ -33,10 +33,10 @@
     <string name="no_detail_available">No details available about this mission</string>
     <string name="launch_success">Success</string>
     <string name="article_link">Article Link</string>
-    <string name="reddit_campaign_link">Reddit Campaign Link</string>
-    <string name="reddit_media_link">Reddit Media Link</string>
-    <string name="wiki_link">Wikipedia Link</string>
-    <string name="video_link">Youtube Link</string>
+    <string name="reddit_campaign_link">Reddit Campaign</string>
+    <string name="reddit_media_link">Reddit Media</string>
+    <string name="wiki_link">Wikipedia</string>
+    <string name="video_link">Youtube</string>
     <string name="header_text">Header</string>
     <string name="details_header_text">DETAILS</string>
     <string name="loading_error">Error while loading data…</string>

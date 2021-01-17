@@ -1,4 +1,4 @@
-package com.experiment.android.spacexpastlaunchtracker.utils.custom
+package com.experiment.android.spacexpastlaunchtracker.utils.extensions
 
 import com.experiment.android.spacexpastlaunchtracker.models.MainDetailsModel
 import com.experiment.android.spacexpastlaunchtracker.models.ViewType

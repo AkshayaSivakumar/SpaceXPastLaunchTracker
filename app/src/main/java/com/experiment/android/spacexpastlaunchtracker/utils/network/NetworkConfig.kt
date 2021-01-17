@@ -1,4 +1,4 @@
-package com.experiment.android.spacexpastlaunchtracker.data.remote
+package com.experiment.android.spacexpastlaunchtracker.utils.network
 
 import android.app.Application
 import android.content.Context

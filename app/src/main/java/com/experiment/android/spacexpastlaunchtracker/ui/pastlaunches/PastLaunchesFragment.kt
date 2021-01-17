@@ -17,6 +17,7 @@ import com.experiment.android.spacexpastlaunchtracker.R
 import com.experiment.android.spacexpastlaunchtracker.databinding.FragmentPastLaunchesBinding
 import com.experiment.android.spacexpastlaunchtracker.utils.custom.CustomItemDecorator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,10 @@ class PastLaunchesFragment : Fragment(R.layout.fragment_past_launches) {
     private var _binding: FragmentPastLaunchesBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var pagingAdapter: PastLaunchListPagingAdapter
+
+    private var fetchListJob: Job? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,40 +44,40 @@ class PastLaunchesFragment : Fragment(R.layout.fragment_past_launches) {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        initRecyclerViewAndObserveData()
+        setupRecyclerViewAndAdapter()
+        observeItemClickForNavigation()
+        initiateFetchJob()
 
         setHasOptionsMenu(true)
     }
 
-    private fun initRecyclerViewAndObserveData() {
+    private fun initiateFetchJob() {
+        fetchListJob?.cancel()
 
-        val adapter =
-            PastLaunchListPagingAdapter(PastLaunchListPagingAdapter.ListItemClickListener {
-                viewModel.navigateToDetailsFragment(it)
-            })
-
-        binding.rcvLaunchList.apply {
-            setHasFixedSize(true)
-            itemAnimator = null
-            addItemDecoration(CustomItemDecorator(25, 20))
-            this.adapter = adapter.withLoadStateHeaderAndFooter(
-                header = PastLaunchListLoadStateAdapter { adapter.retry() },
-                footer = PastLaunchListLoadStateAdapter { adapter.retry() },
-            )
-
-            binding.layoutError.btnRetry.setOnClickListener {
-                adapter.retry()
+        /**
+         * Fetch Past Launches as Flow
+         */
+        fetchListJob = viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.getPastLaunchesListAsFlow().collectLatest {
+                pagingAdapter.submitData(it)
             }
         }
 
-        viewModel.pastLaunchList.observe(viewLifecycleOwner) {
-            adapter.submitData(viewLifecycleOwner.lifecycle, it)
-        }
+        /**
+         * Fetch Past Launches as LiveData
+         */
+        /*fetchListJob = viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.pastLaunchListAsLiveData.observe(viewLifecycleOwner) {
+                pagingAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            }
+        }*/
+    }
 
+    private fun observeItemClickForNavigation() {
         /**
          * Observe the recyclerview item click
          */
-        viewModel.navigateToDetails.observe(viewLifecycleOwner) {
+        /*viewModel.navigateToDetails.observe(viewLifecycleOwner) {
             if (null != it) {
                 this.findNavController().navigate(
                     PastLaunchesFragmentDirections.actionPastLaunchesFragmentToLaunchDetailsFragment(
@@ -81,42 +86,79 @@ class PastLaunchesFragment : Fragment(R.layout.fragment_past_launches) {
                 )
                 viewModel.navigateToDetailsFragmentComplete()
             }
+        }*/
+
+        viewModel.navigateToDetailsScreen().observe(viewLifecycleOwner) {
+            if (null != it) {
+                this.findNavController().navigate(
+                    PastLaunchesFragmentDirections.actionPastLaunchesFragmentToLaunchDetailsFragment(
+                        it
+                    )
+                )
+            }
+        }
+    }
+
+    private fun setupRecyclerViewAndAdapter() {
+        pagingAdapter =
+            PastLaunchListPagingAdapter(PastLaunchListPagingAdapter.ListItemClickListener {
+                viewModel.triggerNavigation(it)
+//                viewModel.navigateToDetailsFragment(it)
+            })
+
+        binding.rcvLaunchList.apply {
+            setHasFixedSize(true)
+            itemAnimator = null
+            addItemDecoration(CustomItemDecorator(25, 25))
         }
 
+        binding.rcvLaunchList.adapter = pagingAdapter.withLoadStateHeaderAndFooter(
+            header = PastLaunchListLoadStateAdapter { pagingAdapter.retry() },
+            footer = PastLaunchListLoadStateAdapter { pagingAdapter.retry() },
+        )
+
+        binding.layoutError.btnRetry.setOnClickListener {
+            pagingAdapter.retry()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            setLoadStateToAdapter()
+        }
+    }
+
+    private suspend fun setLoadStateToAdapter() {
         /**
          * Set recycler view and error layout visibilities based on the LoadingState
          */
-        viewLifecycleOwner.lifecycleScope.launch {
-            adapter.loadStateFlow.collectLatest { loadState ->
-                binding.apply {
-                    //Show progress bar when the state is loading
-                    layoutError.containerCustomProgress.isVisible =
-                        loadState.refresh is LoadState.Loading
-                    //Show recycler view if the state when not loading
-                    rcvLaunchList.isVisible = loadState.refresh is LoadState.NotLoading
-                    //Show retry button if the status is error
-                    layoutError.btnRetry.isVisible = loadState.refresh is LoadState.Error
-                    //Show no network image view when the load state is error
-                    layoutError.ivNoNetwork.isVisible = loadState.refresh is LoadState.Error
-                    //Show msg/error textview when the status is loading or error and show the appropriate message
-                    layoutError.tvMsgError.isVisible =
-                        loadState.refresh is LoadState.Loading || loadState.refresh is LoadState.Error
+        pagingAdapter.loadStateFlow.collectLatest { loadState ->
+            binding.apply {
+//Show progress bar when the state is loading
+                layoutError.containerCustomProgress.isVisible =
+                    loadState.refresh is LoadState.Loading
+                //Show recycler view if the state when not loading
+                rcvLaunchList.isVisible = loadState.refresh is LoadState.NotLoading
+                //Show retry button if the status is error
+                layoutError.btnRetry.isVisible = loadState.refresh is LoadState.Error
+                //Show no network image view when the load state is error
+                layoutError.ivNoNetwork.isVisible = loadState.refresh is LoadState.Error
+                //Show msg/error textview when the status is loading or error and show the appropriate message
+                layoutError.tvMsgError.isVisible =
+                    loadState.refresh is LoadState.Loading || loadState.refresh is LoadState.Error
 
-                    if (loadState.refresh is LoadState.Loading) {
-                        layoutError.tvMsgError.text = resources.getString(R.string.loading)
-                    } else if (loadState.refresh is LoadState.Error) {
-                        layoutError.tvMsgError.text = resources.getString(R.string.no_network_error)
-                    }
+                if (loadState.refresh is LoadState.Loading) {
+                    layoutError.tvMsgError.text = resources.getString(R.string.loading)
+                } else if (loadState.refresh is LoadState.Error) {
+                    layoutError.tvMsgError.text = resources.getString(R.string.no_network_error)
+                }
 
-                    if (loadState.source.refresh is LoadState.NotLoading
-                        && loadState.append.endOfPaginationReached
-                        && adapter.itemCount < 1
-                    ) {
-                        rcvLaunchList.isVisible = false
-                        layoutError.tvEmptyError.isVisible = true
-                    } else {
-                        layoutError.tvEmptyError.isVisible = false
-                    }
+                if (loadState.source.refresh is LoadState.NotLoading
+                    && loadState.append.endOfPaginationReached
+                    && pagingAdapter.itemCount < 1
+                ) {
+                    rcvLaunchList.isVisible = false
+                    layoutError.tvEmptyError.isVisible = true
+                } else {
+                    layoutError.tvEmptyError.isVisible = false
                 }
             }
         }
@@ -125,6 +167,11 @@ class PastLaunchesFragment : Fragment(R.layout.fragment_past_launches) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        fetchListJob?.cancel()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
